@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
@@ -10,6 +11,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from app_style import css, bot_template, user_template
 
+load_dotenv()
+access_token = os.getenv("ACCESS_TOKEN")
 
 class RAG_PDF:
     '''
@@ -24,7 +27,7 @@ class RAG_PDF:
             # Open Source model to generate embeddings for the text
             self.embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
             # Open Source model to generate response (Current model used is T5-XXL)
-            self.llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512}, huggingfacehub_api_token= "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")
+            self.llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512}, huggingfacehub_api_token= access_token)
         elif model=="openai":
             # OpenAI model to generate embeddings for the text
             self.embeddings = OpenAIEmbeddings()
