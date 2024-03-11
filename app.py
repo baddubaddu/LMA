@@ -1,3 +1,4 @@
+import time
 from dotenv import load_dotenv
 import streamlit as st
 from app_style import css, bot_template, user_template
@@ -22,8 +23,8 @@ def main():
     # loading environment varibales
     load_dotenv()
     # Page Config
-    st.set_page_config(page_title="Ask-your-PDFs",
-                       page_icon=":books:")
+    st.set_page_config(page_title="Let Me Answer",
+                       page_icon=":rocket:")
     st.write(css, unsafe_allow_html=True)
     # Chat history session management
 
@@ -36,8 +37,8 @@ def main():
     # render_background_img(background_path)
     
     # Chat User input
-    st.header("Chat with your PDFs")
-    user_question = st.text_input("Ask me anything about your document")
+    st.header(":green[Let Me Answer]:rocket:")
+    user_question = st.text_input("**:green[Ask me anything about your document]**")
     styl = f"""
             <style>
                 .stTextInput {{
@@ -58,24 +59,22 @@ def main():
         st.image(logo_image_path, use_column_width=True)
         
         # Header text for the sidebar
-        st.subheader("Your documents")
+        st.subheader(":green[Your documents]")
 
         # File Uploader (Allowing multiple files upload)
         pdf_docs = st.file_uploader(
-            "Upload your PDFs here and click on 'Read'", accept_multiple_files=True)
+            "**:green[Upload your PDFs here and click on 'Read']**", accept_multiple_files=True)
         
         # When the submit button is clicked
-        if st.button("Read"):
-            # Processing Bar
-            with st.spinner("Reading"):
-                # Creating an object of RAG pipeline
+        if st.button("**:green[Read]**"):
+            # Processing
+            with st.spinner("**:rainbow[Reading]**"):
                 RAG_object = RAG_PDF(pdf_docs)
-
                 # Activating the RAG Pipeline
                 st.session_state.conversation = RAG_object.activate_RAG_pipeline()
-                
                 # Posting an update when the upload and processing of RAG architecture done
-                st.write("Reading Completed.")
+                st.write("**:green[Reading Completed.]**")
+                st.balloons()
 
 if __name__ == '__main__':
     main()
